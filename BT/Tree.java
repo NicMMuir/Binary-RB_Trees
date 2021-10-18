@@ -2,7 +2,9 @@ import java.util.Random;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Stack;
-
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 
 
@@ -40,10 +42,11 @@ public static void main(String[] args){
     FileWriter Filed = new FileWriter("BinaryTreeDelete.txt");
 
     for(int j =1;j<num;j*=2){
+        Integer[] Arr = CreateArr(j);
         for(int q=0;q<3;q++){
         Tree tree = new Tree();
         long start= System.nanoTime();
-        build_tree(tree,j);
+        build_tree(tree,j,Arr);
         long end = System.nanoTime();
         long tot = (end - start);
         Filei.write(String.valueOf(j)+" "+String.valueOf(tot) +" "+String.valueOf(Depth(tree.root))+"\n");
@@ -67,9 +70,23 @@ public static void main(String[] args){
 
 }
 
-public static void build_tree(Tree T,int Number){
+
+public static Integer[] CreateArr(int Num){
+    Integer[] Arr = new Integer[Num];
+    for(int k=0;k<Num;k++){
+        Arr[k] = k+1;
+    }
+    List<Integer> ls = Arrays.asList(Arr);
+    Collections.shuffle(ls);
+    Arr = ls.toArray(Arr);
+    return(Arr);
+}
+
+
+
+public static void build_tree(Tree T,int Number,Integer[] Arr){
     for(int k = 0 ;k<Number;k++){
-        Node temp = new Node((int)Math.floor(Math.random()*(100-0+1)+0));
+        Node temp = new Node(Arr[k]);
         stk.push(temp);
         Tree_insert(T,temp);
     }
